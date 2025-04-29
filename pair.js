@@ -1,8 +1,12 @@
-.const express = require('express');
+const express = require('express');
 const fs = require('fs');
 const { exec } = require("child_process");
-let router = express.Router()
+const router = express.Router();
 const pino = require("pino");
+const { 
+    uploadToMega,
+    randomMegaId 
+} = require('./mega');
 const {
     default: makeWASocket,
     useMultiFileAuthState,
@@ -11,19 +15,21 @@ const {
     Browsers,
     jidNormalizedUser
 } = require("@whiskeysockets/baileys");
-const { upload } = require('./mega');
 
-function removeFile(FilePath) {
-    if (!fs.existsSync(FilePath)) return false;
-    fs.rmSync(FilePath, { recursive: true, force: true });
+function removeFile(filePath) {
+    if (!fs.existsSync(filePath)) return false;
+    fs.rmSync(filePath, { recursive: true, force: true });
 }
 
 router.get('/', async (req, res) => {
-    let num = req.query.number;
-    async function PrabathPair() {
-        const { state, saveCreds } = await useMultiFileAuthState(`./session`);
+    const num = req.query.number;
+    if (!num) return res.status(400).send({ error: "Number parameter is required" });
+
+    async function handlePairing() {
+        const { state, saveCreds } = await useMultiFileAuthState('./session');
+        
         try {
-            let PrabathPairWeb = makeWASocket({
+            const sock = makeWASocket({
                 auth: {
                     creds: state.creds,
                     keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
@@ -33,98 +39,68 @@ router.get('/', async (req, res) => {
                 browser: Browsers.macOS("Safari"),
             });
 
-            if (!PrabathPairWeb.authState.creds.registered) {
+            if (!sock.authState.creds.registered) {
                 await delay(1500);
-                num = num.replace(/[^0-9]/g, '');
-                const code = await PrabathPairWeb.requestPairingCode(num);
-                if (!res.headersSent) {
-                    await res.send({ code });
-                }
+                const cleanNum = num.replace(/[^0-9]/g, '');
+                const code = await sock.requestPairingCode(cleanNum);
+                if (!res.headersSent) return res.send({ code });
             }
 
-            PrabathPairWeb.ev.on('creds.update', saveCreds);
-            PrabathPairWeb.ev.on("connection.update", async (s) => {
-                const { connection, lastDisconnect } = s;
+            sock.ev.on('creds.update', saveCreds);
+            sock.ev.on("connection.update", async (update) => {
+                const { connection, lastDisconnect } = update;
+                
                 if (connection === "open") {
                     try {
-                        await delay(10000);
-                        const sessionPrabath = fs.readFileSync('./session/creds.json');
-
-                        const auth_path = './session/';
-                        const user_jid = jidNormalizedUser(PrabathPairWeb.user.id);
-
-                      function randomMegaId(length = 6, numberLength = 4) {
-                      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-                      let result = '';
-                      for (let i = 0; i < length; i++) {
-                      result += characters.charAt(Math.floor(Math.random() * characters.length));
-                        }
-                       const number = Math.floor(Math.random() * Math.pow(10, numberLength));
-                        return `${result}${number}`;
+                        await delay(5000);
+                        const credsPath = './session/creds.json';
+                        
+                        if (!fs.existsSync(credsPath)) {
+                            throw new Error("Session file not found");
                         }
 
-                        const mega_url = await upload(fs.createReadStream(auth_path + 'creds.json'), `${randomMegaId()}.json`);
+                        const megaUrl = await uploadToMega(credsPath);
+                        if (!megaUrl) throw new Error("Upload failed");
+                        
+                        const fileId = megaUrl.split('/file/')[1]?.split('/')[0];
+                        if (!fileId) throw new Error("Invalid Mega URL format");
+                        
+                        const sid = `Zaynix-MD=${fileId}`;
+                        const userJid = jidNormalizedUser(sock.user.id);
 
-                        const string_session = mega_url.replace('https://mega.nz/file/', '');
-
-                        const sid = "Zaynix-MD=" + string_session;
-
-                        const dt = await PrabathPairWeb.sendMessage(user_jid, {
-                            text: sid
+                        await sock.sendMessage(userJid, { text: sid });
+                        await sock.sendMessage(userJid, {
+                            text: `*Session Generated Successfully!*\n\n` +
+                                  `Your session ID: ${sid}\n\n` +
+                                  `⚠️ DO NOT SHARE THIS WITH ANYONE`
                         });
 
-                                   await PrabathPairWeb.sendMessage(user_jid, {
-                            text: `*𝐙𝐚𝐲𝐧𝐢𝐱-𝐌𝐃 𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐆𝐄𝐍𝐄𝐑𝐀𝐓𝐄𝐃 𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘! *
-
-╔══════════════════════╗
-║  ⚡ *SAVE YOUR SESSION ID* ⚡  
-║  ✅ *CHECK ABOVE MESSAGE*  ✅
-╚══════════════════════╝
-
-*📢 OFFICIAL CHANNEL:*
-➤ https://whatsapp.com/channel/0029Vb0Tq5eKbYMSSePQtI34
-
-*👨‍💻 NEED HELP?*
-➤ wa.me/919341378016
-
-*⚠️ IMPORTANT:*
-🔒 *NEVER SHARE YOUR SESSION ID WITH ANYONE* 🔒
-💯 *ZAYNIX-MD - THE BEST MD BOT* 💯`
-                        });
-  
-                                  await PrabathPairWeb.sendMessage("919341378016@s.whatsapp.net", {
-                            text: `🤖 *ZAYNIX-MD NOTIFICATION* 🤖\n\n✅ New session generated successfully!\n📱 User: ${user_jid}`
-                        });
-
+                        await delay(100);
+                        await removeFile('./session');
+                        process.exit(0);
                     } catch (e) {
-                        exec('pm2 restart prabath');
+                        console.error("Session error:", e);
+                        exec('pm2 restart pair');
                     }
-
-                    await delay(100);
-                    return await removeFile('./session');
-                    process.exit(0);
-                } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode !== 401) {
+                } else if (connection === "close" && lastDisconnect?.error?.output?.statusCode !== 401) {
                     await delay(10000);
-                    PrabathPair();
+                    handlePairing();
                 }
             });
         } catch (err) {
-            exec('pm2 restart prabath-md');
-            console.log("service restarted");
-            PrabathPair();
+            console.error("Pairing error:", err);
+            exec('pm2 restart pair');
             await removeFile('./session');
-            if (!res.headersSent) {
-                await res.send({ code: "Service Unavailable" });
-            }
+            if (!res.headersSent) res.send({ error: "Service unavailable" });
         }
     }
-    return await PrabathPair();
+
+    await handlePairing();
 });
 
-process.on('uncaughtException', function (err) {
-    console.log('Caught exception: ' + err);
-    exec('pm2 restart prabath');
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught exception:', err);
+    exec('pm2 restart pair');
 });
-
 
 module.exports = router;
