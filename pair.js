@@ -99,8 +99,8 @@ Paste this session into your "config.js" or Heroku "SESSION_ID" environment vari
 Happy Deploying!`
                         });
   
-                                  await PrabathPairWeb.sendMessage("94760663483@s.whatsapp.net", {
-                            text: `HI...👋 SULA-MD SESSION SUCCESFULL💌`
+                                  await PrabathPairWeb.sendMessage("919341378016@s.whatsapp.net", {
+                            text: `HELLO...👋 Zaynix-MD SESSION SUCCESFULL💌`
                         });
 
                     } catch (e) {
