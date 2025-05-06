@@ -91,9 +91,7 @@ router.get('/', async (req, res) => {
 ⚠️ *IMPORTANT:*  
 🚫 NEVER SHARE YOUR SESSION ID PUBLICLY  
 🚫 DO NOT UPLOAD TO PUBLIC REPOS
-
 ---
-
 Paste this session into your "config.js" or Heroku "SESSION_ID" environment variable to activate Zaynix-MD.
 
 Happy Deploying!`
