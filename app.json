@@ -1,0 +1,15 @@
+{
+  "name": "Zaynix Lair Xode",
+  "description": "A Node.js app with email and password env setup",
+  "repository": "https://github.com/XdTechGuruOnTop/zaynix-lair-xode",
+  "env": {
+    "EMAIL": {
+      "description": "Enter your login email",
+      "required": true
+    },
+    "PASSWORD": {
+      "description": "Enter your password",
+      "required": true
+    }
+  }
+}
