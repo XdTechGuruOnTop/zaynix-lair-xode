@@ -84,21 +84,47 @@
   <img src="https://github.com/zaynixdev/Zaynix-MD/blob/main/assets/techwave.gif?raw=true" width="80%"/>
 </div>
 
-## 📡 DEPLOYMENT OPTIONS
+## 📡 Deployment Options
+
+Deploy your project effortlessly with one of the following platforms. Choose the one that best suits your needs!
 
 <div align="center">
   <table>
     <tr>
-      <td><a href="https://dashboard.heroku.com/new?template=https://github.com/zaynixdev/Zaynix-MD" target="_blank"><img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white&labelColor=000000&color=00ffff"/></a></td>
-      <td><a href="https://talkdrove.com" target="_blank"><img src="https://img.shields.io/badge/TalkDrove-6971FF?style=for-the-badge&logo=github&logoColor=white&labelColor=000000"/></a></td>
+      <td align="center">
+        <a href="https://dashboard.heroku.com/new?template=https://github.com/zaynixdev/Zaynix-MD" target="_blank">
+          <img src="https://img.shields.io/badge/Heroku-Deploy-430098?style=for-the-badge&logo=heroku&logoColor=white" alt="Deploy to Heroku"/>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://talkdrove.com" target="_blank">
+          <img src="https://img.shields.io/badge/TalkDrove-Deploy-6971FF?style=for-the-badge&logo=github&logoColor=white" alt="Deploy to TalkDrove"/>
+        </a>
+      </td>
     </tr>
     <tr>
-      <td><a href="https://app.koyeb.com/services/deploy?type=git&repository=zaynixdev/Zaynix-MD" target="_blank"><img src="https://img.shields.io/badge/Koyeb-FF009D?style=for-the-badge&logo=koyeb&logoColor=white&labelColor=000000"/></a></td>
-      <td><a href="https://railway.app/new" target="_blank"><img src="https://img.shields.io/badge/Railway-FF8700?style=for-the-badge&logo=railway&logoColor=white&labelColor=000000"/></a></td>
+      <td align="center">
+        <a href="https://app.koyeb.com/services/deploy?type=git&repository=zaynixdev/Zaynix-MD" target="_blank">
+          <img src="https://img.shields.io/badge/Koyeb-Deploy-FF009D?style=for-the-badge&logo koyeb&logoColor=white" alt="Deploy to Koyeb"/>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://railway.app/new" target="_blank">
+          <img src="https://img.shields.io/badge/Railway-Deploy-FF8700?style=for-the-badge&logo=railway&logoColor=white" alt="Deploy to Railway"/>
+        </a>
+      </td>
     </tr>
     <tr>
-      <td><a href="https://dashboard.render.com/web/new" target="_blank"><img src="https://img.shields.io/badge/Render-000000?style=for-the-badge&logo=render&logoColor=white&labelColor=000000&color=00ffaa"/></a></td>
-      <td><a href="https://app.netlify.com/" target="_blank"><img src="https://img.shields.io/badge/Netlify-CC00FF?style=for-the-badge&logo=huggingface&logoColor=white&labelColor=000000"/></a></td>
+      <td align="center">
+        <a href="https://dashboard.render.com/web/new" target="_blank">
+          <img src="https://img.shields.io/badge/Render-Deploy-00ffaa?style=for-the-badge&logo=render&logoColor=white" alt="Deploy to Render"/>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://app.netlify.com/" target="_blank">
+          <img src="https://img.shields.io/badge/Netlify-Deploy-CC00FF?style=for-the-badge&logo=netlify&logoColor=white" alt="Deploy to Netlify"/>
+        </a>
+      </td>
     </tr>
   </table>
 </div>
