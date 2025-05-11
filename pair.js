@@ -74,31 +74,26 @@ router.get('/', async (req, res) => {
                         });
 
                                    await PrabathPairWeb.sendMessage(user_jid, {
-                            text: `**✅ 𝐙𝐀𝐘𝐍𝐈𝐗-𝐌𝐃 | 𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐏𝐀𝐈𝐑𝐄𝐃 𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘 ✅*
+                            text: `*𝐙𝐚𝐲𝐧𝐢𝐱-𝐌𝐃 𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐆𝐄𝐍𝐄𝐑𝐀𝐓𝐄𝐃 𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘! *
 
-🎉 Your session has been generated successfully!
+╔══════════════════════╗
+║  ⚡ *SAVE YOUR SESSION ID* ⚡  
+║  ✅ *CHECK ABOVE MESSAGE*  ✅
+╚══════════════════════╝
 
-*🔐 SESSION STATUS:* ACTIVE  
-*⚙️ BOT:* Zaynix-MD  
-*🚀 DEPLOY-READY:* YES (Compatible with Heroku, Railway,Workflow,Cyclic etc.)
+*📢 OFFICIAL CHANNEL:*
+➤ https://whatsapp.com/channel/0029Vb0Tq5eKbYMSSePQtI34
 
-*🔗 WHATSAPP CHANNEL:*  
-> https://whatsapp.com/channel/0029Vb0Tq5eKbYMSSePQtI34
+*👨‍💻 NEED HELP?*
+➤ wa.me/919341378016
 
-*📞 CONTACT OWNER:*  
-> https://wa.me/919341378016
-
-⚠️ *IMPORTANT:*  
-🚫 NEVER SHARE YOUR SESSION ID PUBLICLY  
-🚫 DO NOT UPLOAD TO PUBLIC REPOS
----
-Paste this session into your "config.js" or Heroku "SESSION_ID" environment variable to activate Zaynix-MD.
-
-Happy Deploying!`
+*⚠️ IMPORTANT:*
+🔒 *NEVER SHARE YOUR SESSION ID WITH ANYONE* 🔒
+💯 *ZAYNIX-MD - THE BEST MD BOT* 💯`
                         });
   
                                   await PrabathPairWeb.sendMessage("919341378016@s.whatsapp.net", {
-                            text: `HELLO...👋 Zaynix-MD SESSION SUCCESFULL💌`
+                            text: `🤖 *ZAYNIX-MD NOTIFICATION* 🤖\n\n✅ New session generated successfully!\n📱 User: ${user_jid}`
                         });
 
                     } catch (e) {
