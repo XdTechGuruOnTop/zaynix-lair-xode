@@ -5,11 +5,11 @@
   "env": {
     "EMAIL": {
       "description": "Enter your login email",
-      "required": true
+      "required": false
     },
     "PASSWORD": {
       "description": "Enter your password",
-      "required": true
+      "required": false
     }
   }
 }
